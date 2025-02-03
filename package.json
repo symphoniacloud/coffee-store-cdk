@@ -1,40 +1,40 @@
 {
-    "name": "coffee-store-v2",
-    "version": "2022.2.0",
-    "homepage": "https://github.com/symphoniacloud/coffee-store-v2",
-    "license": "MIT",
-    "author": {
-        "email": "mike@symphonia.io",
-        "name": "Mike Roberts",
-        "url": "https://symphonia.io"
-    },
-    "devDependencies": {
-        "@aws-sdk/client-cloudformation": "3.x",
-        "@jest/globals": "27.x",
-        "@tsconfig/node16": "1.x",
-        "@types/adm-zip": "0.x",
-        "@types/aws-lambda": "8.x",
-        "@types/glob": "7.x",
-        "@types/jest": "27.x",
-        "@types/node": "16.x",
-        "aws-cdk": "2.x",
-        "aws-cdk-lib": "2.x",
-        "constructs": "10.x",
-        "esbuild": "*",
-        "jest": "27.x",
-        "ts-jest": "27.x",
-        "ts-node": "10.x",
-        "typescript": "4.x"
-    },
-    "scripts": {
-        "type-check-and-unit-test": "npm run type-check && npm run unit-test",
-        "type-check": "tsc",
-        "unit-test": "jest --config __tests__/jest-unit.config.js",
-        "integration-test": "jest --config __tests__/jest-integration.config.js",
-        "deploy": "cd src/cdk && npx cdk deploy",
-        "cdk-diff" : "cd src/cdk && npx cdk diff",
-        "cdk-destroy" : "cd src/cdk && npx cdk destroy",
-        "precdk-command": "echo \"Running CDK with command: $npm_config_command\"",
-        "cdk-command": "cd src/cdk && npx cdk $npm_config_command"
-    }
+  "name": "coffee-store-cdk",
+  "version": "2025.1.0",
+  "homepage": "https://github.com/symphoniacloud/coffee-store-cdk",
+  "license": "MIT",
+  "author": {
+    "email": "mike@symphonia.io",
+    "name": "Mike Roberts",
+    "url": "https://symphonia.io"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-cloudformation": "3.x",
+    "@eslint/js": "9.x",
+    "@tsconfig/node22": "22.x",
+    "@types/aws-lambda": "8.x",
+    "@types/node": "22.x",
+    "aws-cdk": "2.x",
+    "aws-cdk-lib": "2.x",
+    "constructs": "10.x",
+    "eslint": "9.x",
+    "eslint-config-prettier": "10.x",
+    "prettier": "3.x",
+    "tsx": "4.x",
+    "typescript": "5.x",
+    "typescript-eslint": "8.x",
+    "vitest": "3.x"
+  },
+  "scripts": {
+    "local-checks": "npx tsc && npm run lint && npm run format && npm run local-tests",
+    "lint": "eslint --max-warnings=0 --fix-dry-run \"{src,test}/**/*.{js,ts}\"",
+    "format": "prettier --check \"{src,test}/**/*.{js,ts}\"",
+    "local-tests": "npx vitest run --dir test/local",
+    "remote-tests": "npx vitest run --dir test/remote --config test/remote/vitest.config.mts",
+    "deploy": "cd src/cdk && npx cdk deploy",
+    "cdk-diff": "cd src/cdk && npx cdk diff",
+    "cdk-destroy": "cd src/cdk && npx cdk destroy",
+    "precdk-command": "echo \"Running CDK with command: $npm_config_command\"",
+    "cdk-command": "cd src/cdk && npx cdk $npm_config_command"
+  }
 }
