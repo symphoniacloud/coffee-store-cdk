@@ -34,5 +34,5 @@ jobs:
         shell: bash
         run: >
           npm install &&
-          npm run type-check-and-unit-test &&
-          STACK_NAME_PREFIX=coffee-store-ci npm run integration-test
+          npm run local-checks &&
+          STACK_NAME_PREFIX=coffee-store-ci npm run remote-tests
