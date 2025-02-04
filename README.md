@@ -1,14 +1,14 @@
 # Coffee Store CDK
 
-This is a "walking skeleton" AWS Lambda app, using **TypeScript**, **CDK**, **Vitest**, and **Github Actions**. It is fully
-deployable, includes tests, and has a Github Actions workflow that will perform integration tests on an ephemeral
+This is a "walking skeleton" AWS Lambda app, using **TypeScript**, [**CDK**](https://aws.amazon.com/cdk/), [**Vitest**](https://vitest.dev), and [**GitHub Actions**](https://github.com/features/actions). It is fully
+deployable, includes tests, and has a Github Actions workflow that will perform remote tests on an ephemeral
 deployment in AWS.
 
 In other words you can use this repo as a basis for making your own TypeScript Lambda-based applications.
 
 ## Other CDK examples
 
-This example is part of a collection of CDK examples - others are as follows:
+This example is part of a collection of CDK examples I have created - others are as follows:
 
 * [CDK bare-bones app for TypeScript](https://github.com/symphoniacloud/cdk-bare-bones) - Base project for any TypeScript app using CDK for deployment to AWS. **Try this first if you are getting started with CDK.**
 * [Coffee Store Web Basic](https://github.com/symphoniacloud/coffee-store-web-basic) - Website hosting on AWS with CloudFront and S3
@@ -16,7 +16,7 @@ This example is part of a collection of CDK examples - others are as follows:
 
 ## How this project works
 
-This example deploys a CDK _App_ that deploys a Lambda Function, together with a [Lambda Function URL](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html) to make it accessible over HTTP.
+This example deploys a [CDK _App_](https://docs.aws.amazon.com/cdk/v2/guide/apps.html) that deploys a Lambda Function, together with a [Lambda Function URL](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html) to make it accessible over HTTP.
 
 To build the Lambda function, this example uses the [`NodejsFunction` CDK Construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda_nodejs-readme.html) which performs build actions as part of the deploy process. In this configuration the Construct:
 
@@ -25,12 +25,11 @@ To build the Lambda function, this example uses the [`NodejsFunction` CDK Constr
 
 ### "CDK as build tool"
 
-Using `NodejsFunction` makes CDK a build tool and not just a deployment tool. In the past I've been hesitant to use this feature since it didn't feel like it worked well for me.
+Using `NodejsFunction` makes CDK a build tool and not just a deployment tool. 
+Fellow old-timey developers like me might be concerned by this, however I feel like `NodejsFunction` is "good enough" for many small to medium size TS Lambda projects.
 
-As of August 2022, however, I feel like `NodejsFunction` is probably "good enough" for many small to medium size TS Lambda projects.
-
-If you'd like more control over your build process then swap `NodejsFunction` for the standard CDK `Function` construct, and add a _build_ phase to your project.
-To see an example of this, including a wrapper script for ESBuild, see the [earlier version of this project](https://github.com/symphoniacloud/coffee-store-cdk/tree/57a209a28be7eabe468125ea1d5dc0f81433fcd2).
+If you'd like more control over your build process then swap `NodejsFunction` for the standard [CDK `Function` construct](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Function.html), 
+and add a _build_ phase to your project. To see an example of this, including a wrapper script for ESBuild, see the [earlier version of this project](https://github.com/symphoniacloud/coffee-store-cdk/tree/57a209a28be7eabe468125ea1d5dc0f81433fcd2).
 
 ## Prerequisites
 
@@ -114,7 +113,7 @@ If you want to run remote tests via the IDE:
 ### Running remote tests targeting an ephemeral stack
 
 Alternatively the remote test can run against an _ephemeral_ stack - i.e. a new stack will be deployed as part of
-test setup, and then torn down as part of test cleanup. To use this method **don't**
+test setup, and then torn down as part of test cleanup. Not surprisingly this method takes a lot longer to run! To use this method **don't**
 specify a `STACK_NAME` value in the environment.
 
 E.g. if you run `npm run remote-tests` **with no** `STACK_NAME` you will see something like the following in the console output
