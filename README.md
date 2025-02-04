@@ -1,21 +1,10 @@
-# Coffee Store V2
+# Coffee Store CDK
 
 This is a "walking skeleton" AWS Lambda app, using **TypeScript**, **CDK**, **Vitest**, and **Github Actions**. It is fully
 deployable, includes tests, and has a Github Actions workflow that will perform integration tests on an ephemeral
 deployment in AWS.
 
 In other words you can use this repo as a basis for making your own TypeScript Lambda-based applications.
-
-This is an updated version of a demo app I originally put together in 2020 for
-[Cloud Coffee Break](https://github.com/symphoniacloud/cloud-coffee-break), a YouTube series I recorded.
-
-This version contains the following changes since the 2020 version:
-
-* Uses TypeScript instead of Javascript
-* Uses CDK instead of SAM
-* Uses Github Actions instead of AWS CodeBuild for automation. Github Actions-to-AWS security uses OIDC, not long-lived
-  access tokens.
-* Uses a Lambda Function URL instead of API Gateway
 
 ## Other CDK examples
 
@@ -40,7 +29,8 @@ Using `NodejsFunction` makes CDK a build tool and not just a deployment tool. In
 
 As of August 2022, however, I feel like `NodejsFunction` is probably "good enough" for many small to medium size TS Lambda projects.
 
-If you'd like more control over your build process then swap `NodejsFunction` for the standard CDK `Function` construct, and add a _build_ phase to your project. To see an example of this, including a wrapper script for ESBuild, see the [earlier version of this project](https://github.com/symphoniacloud/coffee-store-cdk/tree/57a209a28be7eabe468125ea1d5dc0f81433fcd2).
+If you'd like more control over your build process then swap `NodejsFunction` for the standard CDK `Function` construct, and add a _build_ phase to your project.
+To see an example of this, including a wrapper script for ESBuild, see the [earlier version of this project](https://github.com/symphoniacloud/coffee-store-cdk/tree/57a209a28be7eabe468125ea1d5dc0f81433fcd2).
 
 ## Prerequisites
 
@@ -70,7 +60,7 @@ If successful, the end result will look something like this:
 The unit tests run entirely locally, and execute the code directly, i.e. they do not use local runtime simulators. For
 the reasoning behind this choice see https://blog.symphonia.io/posts/2020-08-19_serverless_testing .
 
-> Once you've run npm install once in the directory you won't need to again
+Once you've run npm install once in the directory you won't need to again unless you need to update versions of dependencies.
 
 To deploy the application to AWS run the following:
 
@@ -102,52 +92,52 @@ For other commands, **including how to teardown**, see the [_Usage_ section of t
 * Install dependencies with `npm install`, or your IDE's Node support.
 * Run unit tests by running all tests under _/test/local_.
 
-## Running integration tests
+## Running remote tests
 
-This project includes an integration test which calls the deployed app in AWS via https and validates the response.
+This project includes a remote test which calls the deployed app in AWS via https and validates the response.
 
-### Running integration tests targeting a stack that has already been deployed
+### Running remote tests targeting a stack that has already been deployed
 
-If you want to run the integration tests against a stack that has already been deployed you should specify the stack's name with
-the `STACK_NAME` environment variable, e.g.:
+If you want to run the remote tests against a stack that has already been deployed **you should specify the stack's name with
+the `STACK_NAME` environment variable**, e.g.:
 
 ```shell
 $ STACK_NAME=coffee-store-cdk npm run remote-tests
 ```
 
-If you are running tests via the IDE:
+If you want to run remote tests via the IDE:
 
 * Use the vitest configuration at _/test/remote/vitest.config.ts_
-* make sure to specify the `STACK_NAME` env var as part of your test runner configuration if you want to use a
+* make sure to specify the `STACK_NAME` environment variable as part of your test runner configuration if you want to use a
   pre-deployed stack.
 
-### Running integration tests targeting an ephemeral stack
+### Running remote tests targeting an ephemeral stack
 
-Alternatively the integration test can run against an _ephemeral_ stack - i.e. a new stack will be deployed as part of
-test setup, and then torn down as part of test cleanup. To use this method don't
+Alternatively the remote test can run against an _ephemeral_ stack - i.e. a new stack will be deployed as part of
+test setup, and then torn down as part of test cleanup. To use this method **don't**
 specify a `STACK_NAME` value in the environment.
 
 E.g. if you run `npm run remote-tests` **with no** `STACK_NAME` you will see something like the following in the console output
-while the integration test is being run:
+while the remote test is being run:
 
 ```
 > coffee-store-cdk@2025.1.0 remote-tests
 > npx vitest run --dir test/remote --config test/remote/vitest.config.mts
 
 
- RUN  v3.0.3 [PATH_HERE]/coffee-store-v2
+ RUN  v3.0.3 [PATH_HERE]/coffee-store-cdk
 
-stdout | test/remote/api-integration.test.ts
+stdout | test/remote/api-remote.test.ts
 Starting cloudformation deployment of stack coffee-store-it-20250121-191154
 ```
 
 and a little later you will see:
 
 ```
-stdout | test/remote/api-integration.test.ts
+stdout | test/remote/api-remote.test.ts
 Calling cloudformation to delete stack coffee-store-it-20250121-191154
 
- ✓ test/remote/api-integration.test.ts (1 test) 70204ms
+ ✓ test/remote/api-remote.test.ts (1 test) 70204ms
    ✓ API should return 200 exit code and expected content 355ms
 
  Test Files  1 passed (1)
@@ -160,19 +150,21 @@ Calling cloudformation to delete stack coffee-store-it-20250121-191154
 
 The example above shows the test creating a stack named `stack coffee-store-it-20250121-191154`. If you want an
 alternative to the start of the name being `coffee-store-it` you can specify
-the `STACK_NAME_PREFIX` environment variable when running the integration test.
+the `STACK_NAME_PREFIX` environment variable when running the remote test.
 
 ## Continuous integration automation
 
 ### Github Actions Prerequisites
 
 The included Github Actions workflow at [.github/workflows/buildAndTest.yml](.github/workflows/buildAndTest.yml) will
-run all tests. Since these tests include the integration tests, the workflow will (indirectly) deploy
+run all tests. Since these tests include the remote tests, the workflow will (indirectly) deploy
 an ephemeral version of the application to AWS, and therefore the Github Actions workflow needs permission to access
 your AWS account.
 
 For instructions on how to setup these permissions,
 see [github-actions-prereqs/README.md](github-actions-prereqs/README.md).
+
+Alternatively if you don't want to setup AWS integration for GitHub Actions change the [workflow definition](.github/workflows/buildAndTest.yml) to just run `local-checks`.
 
 ### Usage
 
@@ -186,6 +178,19 @@ You might choose to update the workflow to also deploy a non-ephemeral version o
 
 If you have questions related to this example please add a Github issue, or drop me a line
 at [mike@symphonia.io](mailto:mike@symphonia.io) . I'm also on Mastodon at http://hachyderm.io/@mikebroberts and BlueSky at https://bsky.app/profile/mikebroberts.com .
+
+## Previous Versions
+
+This is an updated version of a demo app I originally put together in 2020 for
+[Cloud Coffee Break](https://github.com/symphoniacloud/cloud-coffee-break), a YouTube series I recorded.
+
+This version contains the following changes since the 2020 version, plus several others:
+
+* Uses TypeScript instead of Javascript
+* Uses CDK instead of SAM
+* Uses Github Actions instead of AWS CodeBuild for automation. Github Actions-to-AWS security uses OIDC, not long-lived
+  access tokens.
+* Uses a Lambda Function URL instead of API Gateway
 
 ## Changelog
 
