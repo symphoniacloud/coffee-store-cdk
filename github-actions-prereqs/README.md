@@ -23,7 +23,7 @@ with a suitably powerful role then you don't have much work to do! You have two 
 
 * Either create a new Github Secret (org or repo scope) named `ACTIONS_ROLE_ARN`, with the value being the ARN of the
   IAM role Github Actions should assume.
-* OR change the Github actions workflow [template](/.github/workflows/buildAndTest.yml) updating, how `role-to-assume` is configured (e.g. you could hard code
+* OR change the Github actions workflow [template](/.github/workflows/buildAndTest.yml) and change how `role-to-assume` is configured (e.g. you could hard code
   the ARN or specify a different secret).
 
 ## 2 - If you've already configured Github OIDC in your AWS account, but need a new role for this project
