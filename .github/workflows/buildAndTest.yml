@@ -24,8 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@main
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ secrets.ACTIONS_ROLE_ARN }}
           aws-region: us-east-1
@@ -33,6 +38,6 @@ jobs:
       - name: Test
         shell: bash
         run: >
-          npm install &&
+          npm ci &&
           npm run local-checks &&
           STACK_NAME_PREFIX=coffee-store-ci npm run remote-tests
