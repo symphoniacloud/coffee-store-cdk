@@ -1,6 +1,9 @@
 {
   "name": "coffee-store-cdk",
   "version": "2026.1.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "homepage": "https://github.com/symphoniacloud/coffee-store-cdk",
   "license": "MIT",
   "author": {
