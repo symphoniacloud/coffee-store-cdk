@@ -20,7 +20,7 @@ class CoffeeStoreStack extends Stack {
       entry: '../app/lambdaFunctions/api/lambda.ts',
       logRetention: RetentionDays.ONE_WEEK,
       bundling: {
-        target: 'es2022',
+        target: 'es2024',
         sourceMap: true,
         sourceMapMode: SourceMapMode.INLINE,
         sourcesContent: false
