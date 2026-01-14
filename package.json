@@ -1,6 +1,6 @@
 {
   "name": "coffee-store-cdk",
-  "version": "2025.1.0",
+  "version": "2026.1.0",
   "homepage": "https://github.com/symphoniacloud/coffee-store-cdk",
   "license": "MIT",
   "author": {
@@ -11,9 +11,9 @@
   "devDependencies": {
     "@aws-sdk/client-cloudformation": "3.x",
     "@eslint/js": "9.x",
-    "@tsconfig/node22": "22.x",
+    "@tsconfig/node24": "24.x",
     "@types/aws-lambda": "8.x",
-    "@types/node": "22.x",
+    "@types/node": "24.x",
     "aws-cdk": "2.x",
     "aws-cdk-lib": "2.x",
     "constructs": "10.x",

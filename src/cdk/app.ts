@@ -14,7 +14,7 @@ class CoffeeStoreStack extends Stack {
 
     const lambdaFunction = new NodejsFunction(this, 'HelloWorldFunction', {
       architecture: Architecture.ARM_64,
-      runtime: Runtime.NODEJS_22_X,
+      runtime: Runtime.NODEJS_24_X,
       memorySize: 512,
       timeout: Duration.seconds(5),
       entry: '../app/lambdaFunctions/api/lambda.ts',
