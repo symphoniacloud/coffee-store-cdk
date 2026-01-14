@@ -193,6 +193,20 @@ This version contains the following changes since the 2020 version, plus several
 
 ## Changelog
 
+### 2026.1
+
+* Switch to Node 24 from Node 22
+* Update ESBuild bundling target to ES2024
+* Update Vitest 4
+* Update minor version dependencies
+* Replace deprecated logRetention with explicit LogGroup construct
+* Update Lambda handler to use correct Lambda Function URL event types
+* Update GitHub Actions to latest versions (checkout@v6, setup-node@v6, configure-aws-credentials@v5)
+* Add Node.js version requirement to package.json engines field
+* Switch to npm ci in GitHub Actions for deterministic builds
+* Add .nvmrc file for Node version management
+* Mark cdk.context.json as ignored in git
+
 ### 2025.1
 
 * Renamed to "coffee-store-cdk" from "coffee-store-v2"
