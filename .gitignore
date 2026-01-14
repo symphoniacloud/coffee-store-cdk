@@ -1,2 +1,5 @@
 build
 node_modules
+
+# AWS Recommend checking this file in, but I usually prefer not to
+cdk.context.json
