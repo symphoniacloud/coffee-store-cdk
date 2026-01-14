@@ -23,7 +23,7 @@
     "tsx": "4.x",
     "typescript": "5.x",
     "typescript-eslint": "8.x",
-    "vitest": "3.x"
+    "vitest": "4.x"
   },
   "scripts": {
     "local-checks": "npx tsc && npm run lint && npm run format && npm run local-tests",
