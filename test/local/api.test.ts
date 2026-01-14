@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest'
 import { handler } from '../../src/app/lambdaFunctions/api/lambda'
-import { EmptyAPIGatewayProxyEvent } from './testSupport'
+import { EmptyLambdaFunctionURLEvent } from './testSupport'
 
 test('lambda function should return expected message when no name passed', async () => {
-  const result = await handler(EmptyAPIGatewayProxyEvent)
+  const result = await handler(EmptyLambdaFunctionURLEvent)
 
   const expectedResult = {
     statusCode: 200,
@@ -15,7 +15,7 @@ test('lambda function should return expected message when no name passed', async
 
 test('lambda function should return expected message when name on query string', async () => {
   const result = await handler({
-    ...EmptyAPIGatewayProxyEvent,
+    ...EmptyLambdaFunctionURLEvent,
     queryStringParameters: { name: 'Alice' }
   })
 

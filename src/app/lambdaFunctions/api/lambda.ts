@@ -1,7 +1,7 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda'
 import { generateMessage } from '../../domain/messageGenerator'
+import { LambdaFunctionURLEvent, LambdaFunctionURLResult } from 'aws-lambda/trigger/lambda-function-url'
 
-export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResultV2> {
+export async function handler(event: LambdaFunctionURLEvent): Promise<LambdaFunctionURLResult> {
   console.log('API Lambda was called')
   const name = event.queryStringParameters?.['name']
 
