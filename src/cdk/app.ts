@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import { App, CfnOutput, Duration, Stack, StackProps } from 'aws-cdk-lib'
+import { App, CfnOutput, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib'
 import { Construct } from 'constructs'
 import { Architecture, FunctionUrlAuthType, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { NodejsFunction, SourceMapMode } from 'aws-cdk-lib/aws-lambda-nodejs'
-import { RetentionDays } from 'aws-cdk-lib/aws-logs'
+import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs'
 import { createStackProps } from './initSupport'
 
 const DEFAULT_STACK_NAME = 'coffee-store-cdk'
@@ -18,7 +18,11 @@ class CoffeeStoreStack extends Stack {
       memorySize: 512,
       timeout: Duration.seconds(5),
       entry: '../app/lambdaFunctions/api/lambda.ts',
-      logRetention: RetentionDays.ONE_WEEK,
+      logGroup: new LogGroup(this, 'HelloWorldFunctionLogGroup', {
+        logGroupName: `/${props?.stackName}/HelloWorldFunction`,
+        retention: RetentionDays.ONE_WEEK,
+        removalPolicy: RemovalPolicy.DESTROY
+      }),
       bundling: {
         target: 'es2024',
         sourceMap: true,
